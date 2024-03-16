@@ -101,43 +101,49 @@ class H1Record(BaseRecord):
         self.exacta_betting_flag = extract_data_by_position(data, 37, 1)
         self.trio_betting_flag = extract_data_by_position(data, 38, 1)
         self.place_payout_key = extract_data_by_position(data, 39, 1)
+        # 返還馬番情報
         self.return_horse_number_info = [
             extract_data_by_position(data, 40 + i, 1) for i in range(28)
         ]
+        # 返還枠番情報
         self.return_frame_number_info = [
             extract_data_by_position(data, 68 + i, 1) for i in range(8)
         ]
+        # 返還同枠情報
         self.return_same_frame_number_info = [
             extract_data_by_position(data, 76 + i, 1) for i in range(8)
         ]
+        # 単勝票数
         self.single_vote_count = [
             SingleVoteCount(extract_data_by_position(data, 84 + i * 15, 15))
             for i in range(28)
         ]
+        # 複勝票数
         self.place_vote_count = [
             PlaceVoteCount(extract_data_by_position(data, 504 + i * 15, 15))
             for i in range(28)
         ]
+        # 枠連票数
         self.bracket_quinella_vote_count = [
             BracketQuinellaVoteCount(extract_data_by_position(data, 924 + i * 15, 15))
             for i in range(36)
         ]
+        # 馬連票数
         self.quinella_vote_count = [
             QuinellaVoteCount(extract_data_by_position(data, 1464 + i * 18, 18))
             for i in range(153)
         ]
+        # ワイド票数
         self.wide_vote_count = [
             WideVoteCount(extract_data_by_position(data, 4218 + i * 18, 18))
             for i in range(153)
         ]
+        # 馬単票数
         self.exacta_vote_count = [
-            ExactaVoteCount(extract_data_by_position(data, 6372 + i * 18, 18))
-            for i in range(153)
-        ]
-        self.trio_vote_count = [
             ExactaVoteCount(extract_data_by_position(data, 6972 + i * 18, 18))
             for i in range(306)
         ]
+        # 3連複票数
         self.trio_vote_count = [
             TrioVoteCount(extract_data_by_position(data, 12480 + i * 20, 20))
             for i in range(816)

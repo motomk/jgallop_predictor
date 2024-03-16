@@ -191,3 +191,5 @@ Temporary Items
 .apdisk
 
 data_fetcher/data/*.jvd
+data_fetcher/data/*.csv
+
