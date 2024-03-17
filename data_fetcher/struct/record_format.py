@@ -19,7 +19,7 @@ H1_csv_header = [
     "betting_flag_quinella",  # 発売フラグ_馬連
     "betting_flag_wide",  # 発売フラグ_ワイド
     "betting_flag_exacta",  # 発売フラグ_馬単
-    "betting_flag_trifecta",  # 発売フラグ_3連複
+    "betting_flag_trio",  # 発売フラグ_3連複
     "place_payoff_key",  # 複勝着払キー
     "return_horse_number_info",  # 返還馬番情報
     "return_frame_number_info",  # 返還枠番情報
@@ -48,14 +48,14 @@ H1_csv_header = [
     "quinella_bets_total",  # 馬連票数合計
     "wide_bets_total",  # ワイド票数合計
     "exacta_bets_total",  # 馬単票数合計
-    "trifecta_bets_total",  # 3連複票数合計
+    "trio_bets_total",  # 3連複票数合計
     "win_bets_return_total",  # 単勝返還票数合計
     "place_bets_return_total",  # 複勝返還票数合計
     "quinella_place_bets_return_total",  # 枠連返還票数合計
     "quinella_bets_return_total",  # 馬連返還票数合計
     "wide_bets_return_total",  # ワイド返還票数合計
     "exacta_bets_return_total",  # 馬単返還票数合計
-    "trifecta_bets_return_total",  # 3連複返還票数合計
+    "trio_bets_return_total",  # 3連複返還票数合計
 ]
 
 H1_format = [
@@ -166,6 +166,27 @@ H1_format = [
     (28932, 1, 11, 11),
     # 43			3連複返還票数合計	28943	1	11 	11
     (28943, 1, 11, 11),
+]
+
+H6_csv_header = [
+    "record_type_id",  # レコード種別ID
+    "data_category",  # データ区分
+    "data_creation_date",  # データ作成年月日
+    "event_year",  # 開催年
+    "event_date",  # 開催月日
+    "race_track_code",  # 競馬場コード
+    "event_number",  # 開催回_第N回
+    "event_day",  # 開催日目_N日目
+    "race_number",  # レース番号
+    "registered_horses",  # 登録頭数
+    "starting_horses",  # 出走頭数
+    "betting_flag_trifecta",  # 発売フラグ_3連単
+    "return_horse_number_info",  # 返還馬番情報
+    "trifecta_bets_combination_number",  # 3連単票数_組番
+    "trifecta_bets_count",  # 3連単票数_票数
+    "trifecta_bets_popularity_order",  # 3連単票数_人気順
+    "trifecta_bets_total",  # 3連単票数合計
+    "trifecta_return_bets_total",  # 3連単返還票数合計
 ]
 
 record_type_id_map = {
