@@ -1,5 +1,5 @@
 import os
-from struct.record_format import record_type_id_map, H1_csv_header
+from struct.record_format import record_type_id_map, H1_csv_header, H6_csv_header
 
 
 def process_files_in_data_folder():
@@ -22,19 +22,40 @@ def process_files_in_data_folder():
             format = record_type_id_map[record_id]
             csv_values = extract_csv_values(line, format)
             write_csv_line(file_path, csv_values, record_id)
+        elif record_id == "H6":
+            format = record_type_id_map[record_id]
+            csv_values = extract_csv_values(line, format)
+            write_csv_line(file_path, csv_values, record_id)
 
     def extract_csv_values(line, format):
+        """指定されたフォーマットに従って、行からCSV値を抽出する"""
         csv_values = []
         for field in format:
-            start_pos, repeat, length = field[0] - 1, field[1], get_field_length(field)
-            for _ in range(repeat):
-                value = line[start_pos : start_pos + length].strip()
-                csv_values.append(value)
-                start_pos += length
+            start_pos = field[0] - 1  # フィールドの開始位置（0ベースインデックス）
+            if isinstance(field[2], tuple):
+                # データ構造がタプルの場合、繰り返し処理
+                repeat_count = field[1]
+                field_length = sum(field[2])
+                for i in range(repeat_count):
+                    field_value = line[start_pos : start_pos + field_length]
+                    # タプル内の各フィールドに対して処理
+                    sub_field_values = []
+                    sub_field_start = 0
+                    for sub_field_length in field[2]:
+                        sub_field_values.append(
+                            field_value[
+                                sub_field_start : sub_field_start + sub_field_length
+                            ]
+                        )
+                        sub_field_start += sub_field_length
+                    csv_values.extend(sub_field_values)
+                    start_pos += field_length
+            else:
+                # データ構造が単一の場合
+                field_length = field[3]
+                field_value = line[start_pos : start_pos + field_length]
+                csv_values.append(field_value)
         return csv_values
-
-    def get_field_length(field):
-        return field[3] if isinstance(field[2], int) else sum(field[2])
 
     def write_csv_line(file_path, csv_values, record_id):
         csv_line = ",".join(csv_values)
@@ -47,6 +68,9 @@ def process_files_in_data_folder():
             if csv_file.tell() == 0:
                 if record_id == "H1":
                     csv_header = ",".join(H1_csv_header)
+                    csv_file.write(csv_header + "\n")
+                elif record_id == "H6":
+                    csv_header = ",".join(H6_csv_header)
                     csv_file.write(csv_header + "\n")
             csv_file.write(csv_line + "\n")
 
